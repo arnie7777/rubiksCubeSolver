@@ -1,5 +1,5 @@
 from time import sleep
-from cubeSolver import CubeSolver
+#from cubeSolver import CubeSolver
 from algConverter import AlgConverter
 from timer import Timer
 
@@ -12,10 +12,12 @@ def main():
     solved_time = my_timer.stop()
     print(solved_time)
 
+    """
     #Using cubeSolver example
     solver = CubeSolver()
     solution = solver.solve('DRLUUBFBRBLURRLRUBLRDDFDLFUFUFFDBRDUBRUFLLFDDBFLUBLRBD')
     print(solution)
+    """
 
     #Using algConverter example
     converter = AlgConverter()
