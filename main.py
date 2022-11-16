@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 import RPi.GPIO as GPIO
 import time
+from timer import Timer
  
 in1 = 17
 in2 = 18
@@ -30,7 +31,7 @@ GPIO.setup( in1, GPIO.OUT )
 GPIO.setup( in2, GPIO.OUT )
 GPIO.setup( in3, GPIO.OUT )
 GPIO.setup( in4, GPIO.OUT )
- 
+
 # initializing
 GPIO.output( in1, GPIO.LOW )
 GPIO.output( in2, GPIO.LOW )
@@ -49,7 +50,8 @@ def cleanup():
     GPIO.output( in4, GPIO.LOW )
     GPIO.cleanup()
  
- 
+my_timer = Timer()
+my_timer.start()
 # the meat
 try:
     i = 0
@@ -65,10 +67,12 @@ try:
             cleanup()
             exit( 1 )
         time.sleep( step_sleep )
- 
+
 except KeyboardInterrupt:
     cleanup()
     exit( 1 )
+
+print(my_timer.stop())
  
 print('Just before cleanup')
 cleanup()
