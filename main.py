@@ -16,14 +16,14 @@ step_count = 4096 # 5.625*(1/64) per step, 4096 steps is 360°
 direction = True # True for clockwise, False for counter-clockwise
  
 # defining stepper motor sequence (found in documentation http://www.4tronix.co.uk/arduino/Stepper-Motors.php)
-step_sequence = [[1,0,0,1],
-                 [1,0,0,0],
+step_sequence = [[1,0,0,0],
                  [1,1,0,0],
                  [0,1,0,0],
                  [0,1,1,0],
                  [0,0,1,0],
                  [0,0,1,1],
-                 [0,0,0,1]]
+                 [0,0,0,1],
+                 [1,0,0,1]]
  
 # setting up
 GPIO.setmode( GPIO.BCM )
