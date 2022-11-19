@@ -1,6 +1,14 @@
 from motorsOrganizer import MotorsOrganizer
+import time
 
-mot_organizer = MotorsOrganizer()
+def main():
+    motor_organizer = MotorsOrganizer()
+    motor_organizer.rotate('R')
+    time.sleep(0.5)
+    motor_organizer.rotate('R2')
+    motor_organizer.cleanup()
+    del motor_organizer
 
-mot_organizer.rotate('R')
-mot_organizer.cleanup()
+
+if __name__ == '__main__':
+    main()
