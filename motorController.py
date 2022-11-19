@@ -47,7 +47,7 @@ class MotorController:
             pass
 
         # setting up
-        if not MotorController.mode_has_been_set:
+        if not MotorController.mode_has_been_set:  # only true for the first instance
             GPIO.setmode(GPIO.BOARD)
             MotorController.mode_has_been_set = True
 
@@ -89,9 +89,11 @@ class MotorController:
                 motor_step_counter = (motor_step_counter - 1) % 4
             
             time.sleep(MotorController.step_sleep)
+        
+        self.__cleanup_pins()
 
 
-    def cleanup_pins(self) -> None:
+    def __cleanup_pins(self) -> None:
         GPIO.output(self.in1, GPIO.LOW)
         GPIO.output(self.in2, GPIO.LOW)
         GPIO.output(self.in3, GPIO.LOW)

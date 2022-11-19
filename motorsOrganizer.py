@@ -51,14 +51,8 @@ class MotorsOrganizer:
     
 
     def cleanup(self) -> None:
-        '''Cleans up all pins on all motors and finally GPIO clean up
-        Alse deletes all the objects'''
+        '''GPIO clean up. Also deletes all the objects'''
         
-        #self.down_controller.cleanup_pins()
-        #self.front_controller.cleanup_pins()
-        self.right_controller.cleanup_pins()
-        #self.back_controller.cleanup_pins()
-        #self.left_controller.cleanup_pins()
         MotorController.cleanup()
         #del self.down_controller
         #del self.front_controller
