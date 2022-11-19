@@ -28,9 +28,9 @@ class MotorController:
                               [1,0,0,1]]
 
         # setting up
-        if not mode_has_been_set:
+        if not MotorController.mode_has_been_set:
             GPIO.setmode(GPIO.BOARD)
-            mode_has_been_set = True
+            MotorController.mode_has_been_set = True
 
         GPIO.setup(self.in1, GPIO.OUT)
         GPIO.setup(self.in2, GPIO.OUT)
