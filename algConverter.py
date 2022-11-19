@@ -8,6 +8,7 @@ class AlgConverter:
         which reults in the same given move, but without
         moving the top of the cube direcly
         Returns the list of moves'''
+        
         self.__convert_to_u_helper()
         self.converted_moves.append(self.map_moves[move])
         self.__convert_to_u_helper()
