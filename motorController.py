@@ -60,11 +60,12 @@ class MotorController:
 
         for i in range(motor_steps):
             for count, pin in enumerate(self.motor_pins):
-                GPIO.output(pin, self.step_sequence[motor_step_counter][count] )
+                GPIO.output(pin, self.step_sequence[motor_step_counter][count])
             if direction == 'clockwise':
                 motor_step_counter = (motor_step_counter - 1) % 4
             elif direction == 'anticlockwise':
                 motor_step_counter = (motor_step_counter + 1) % 4
+            time.sleep(self.step_sleep)
 
 
     def cleanup(self) -> None:
