@@ -83,10 +83,10 @@ class MotorController:
                 GPIO.output(pin, MotorController.step_sequence[motor_step_counter][count])
             
             if direction == MotorController.clockwise:
-                motor_step_counter = (motor_step_counter - 1) % 4
+                motor_step_counter = (motor_step_counter + 1) % 4
             
             elif direction == MotorController.anitClockwise:
-                motor_step_counter = (motor_step_counter + 1) % 4
+                motor_step_counter = (motor_step_counter - 1) % 4
             
             time.sleep(MotorController.step_sleep)
 
