@@ -1,3 +1,10 @@
 from gui import GUI
+from guiInputStorer import GuiInputStorer
 
-gui = GUI()
+guiInputStorer = GuiInputStorer()
+gui = GUI(guiInputStorer)
+
+del gui
+a = guiInputStorer.get_top_center_color()
+
+print(a)
