@@ -1,4 +1,5 @@
 from tkinter import *
+from guiInputStorer import GuiInputStorer
 
 class GUI:
     def __init__(self, guiInputStorer) -> None:

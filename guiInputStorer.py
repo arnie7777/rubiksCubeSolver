@@ -15,7 +15,7 @@ class GuiInputStorer:
 
 
     def get_front_center_color(self):
-        return front_center_color
+        return self.front_center_color
 
 
     def set_front_center_color(self, color: str):
@@ -23,7 +23,7 @@ class GuiInputStorer:
     
 
     def get_right_center_color(self):
-        return right_center_color
+        return self.right_center_color
 
 
     def set_right_center_color(self, color: str):
@@ -31,7 +31,7 @@ class GuiInputStorer:
     
 
     def get_scrambled_cube(self):
-        return self.top_center_color
+        return self.scrambled_cube
 
 
     def set_scrambled_cube(self, scrambled_cube: str):
