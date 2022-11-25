@@ -1,8 +1,9 @@
-# imspiration to the from the link below
+# inspiration to the from the link below
 # https://ben.akrin.com/driving-a-28byj-48-stepper-motor-uln2003-driver-with-a-raspberry-pi/
 
 import RPi.GPIO as GPIO
 import time
+
 
 class MotorController:
     # tells whether or not the GPIO mode have been set
@@ -14,18 +15,17 @@ class MotorController:
     step_sleep: float = 0.002
 
     # defining stepper motor sequence
-    step_sequence = [[1,1,0,0],
-                     [0,1,1,0],
-                     [0,0,1,1],
-                     [1,0,0,1]]
+    step_sequence = [[1, 1, 0, 0],
+                     [0, 1, 1, 0],
+                     [0, 0, 1, 1],
+                     [1, 0, 0, 1]]
     
     step_count_360_deg: int = 2048  # 360° / (11,25° * (1/64)) = 2.048 steps
     step_count_180_deg: int = int(step_count_360_deg / 2)
     step_count_90_deg: int = int(step_count_360_deg / 4)
 
     clockwise: str = 'clockwise'
-    anitClockwise: str = 'antiClockwise'
-
+    antiClockwise: str = 'antiClockwise'
 
     def __init__(self, motor: str) -> None:
         if motor == 'down':
@@ -64,14 +64,13 @@ class MotorController:
 
         self.motor_pins = [self.in1, self.in2, self.in3, self.in4]
 
-
     def rotate(self, move: str) -> None:
-        # dealut values if move is only assigned the side (i.e. 'D', 'F', 'R', 'B' or 'L')
+        # default values if move is only assigned the side (i.e. 'D', 'F', 'R', 'B' or 'L')
         motor_steps: int = MotorController.step_count_90_deg
         direction: str = MotorController.clockwise
 
         if move[-1] == '\'':
-            direction = MotorController.anitClockwise
+            direction = MotorController.antiClockwise
 
         elif move[-1] == '2':
             motor_steps = MotorController.step_count_180_deg
@@ -85,20 +84,18 @@ class MotorController:
             if direction == MotorController.clockwise:
                 motor_step_counter = (motor_step_counter + 1) % 4
             
-            elif direction == MotorController.anitClockwise:
+            elif direction == MotorController.antiClockwise:
                 motor_step_counter = (motor_step_counter - 1) % 4
             
             time.sleep(MotorController.step_sleep)
         
         self.__cleanup_pins()
 
-
     def __cleanup_pins(self) -> None:
         GPIO.output(self.in1, GPIO.LOW)
         GPIO.output(self.in2, GPIO.LOW)
         GPIO.output(self.in3, GPIO.LOW)
         GPIO.output(self.in4, GPIO.LOW)
-
 
     @classmethod
     def cleanup(cls) -> None:

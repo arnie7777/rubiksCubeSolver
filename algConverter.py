@@ -4,10 +4,10 @@ class AlgConverter:
         self.converted_moves: list[str] = []
 
     def convert_to_u(self, move):
-        '''Converts the given top/U move to a set of moves
-        which reults in the same given move, but without
-        moving the top of the cube direcly
-        Returns the list of moves'''
+        """Converts the given top/U move to a set of moves
+        which results in the same given move, but without
+        moving the top of the cube directly
+        Returns the list of moves"""
         
         self.__convert_to_u_helper()
         self.converted_moves.append(self.map_moves[move])

@@ -3,8 +3,9 @@ from cubeSolver import CubeSolver
 from algConverter import AlgConverter
 from timer import Timer
 
+
 def main():
-    #Using timer example:
+    # Using timer example:
     my_timer = Timer()
     input('Press any key to start timer!')
     my_timer.start()
@@ -12,15 +13,13 @@ def main():
     solved_time = my_timer.stop()
     print(solved_time)
 
-
-    #Using cubeSolver example
+    # Using cubeSolver example
     solver = CubeSolver()
     
-    #Order is U, D, F, R, B, L (easier to follow than the kociemba library order)
+    # Order is U, D, F, R, B, L (easier to follow than the kociemba library order)
     cube = ('LBBUUDDDULFULDFLUBFRFBFLBDBRBLFRLRRDURFBBDRFFURRLLUDUD')
-    #Change order to what the kociemla library accepts (which is U, R, F, D, L, B)
+    # Change order to what the kociemba library accepts (which is U, R, F, D, L, B)
     cube = cube[0:9] + cube[27:36] + cube[18:27] + cube[9:18] + cube[45:54] + cube[36:45]
-    
 
     solution = solver.solve(cube)
     print('\nSolution')
@@ -32,8 +31,7 @@ def main():
     #make it such that the input color buttons tell the program the right side
     #e.g. the user says - top: white, front: red, right: blue, then make the white button give 'U' to the program, red gives 'F', yellow gives 'D' and so on
 
-    
-    #Using algConverter example
+    # Using algConverter example
     print('\nConverting top/U moves')
 
     converter = AlgConverter()

@@ -1,6 +1,7 @@
 from motorsOrganizer import MotorsOrganizer
 import time
 
+
 def main():
     time.sleep(3)
     motor_organizer = MotorsOrganizer()
