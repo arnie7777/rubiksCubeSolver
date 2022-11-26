@@ -74,14 +74,23 @@ class ScrambledCubeController:
         """
         solution: list[str] = self.cube_solver.solve(scrambled_cube)
         # try using the solver, to see if the scrambled cube is solvable
-        if len(solution) < 1:  # if scrambled cube is invalid/not solvable
+        if solution[0] == '':  # if scrambled cube is invalid/not solvable
             self.scrambled_cube_frame.start_solving_error('Not a valid scramble.')
             return
+        
+        # todo implement check to see if the scrambled cube is already solved.
+        # We must do this, because the kociemba library comes up with a algorithm,
+        # which ends up with an solution, which doesn't make sense, when the cube is already solved.
+        # loop through scramble and check when a color occurre, and then a different color occurres,
+        # then the previous color should never be occurred again
+        # for color in scrambled_cube .......
+        # then display for the user that it is already solved and then return
         
         # if scramble is valid (i.e. we have gotten a solution from the cube solver)
         self.cube_solution_model.set_solution(solution)
         self.scrambled_cube_frame.start_solving_success()
         """
+
     def __color_is_valid(self, color: str, scrambled_cube_so_far: str) -> bool:
         """Checks if the same color occurs less than 9 times:
         Returns true if less than 9 times. Else returns false"""
