@@ -1,4 +1,7 @@
 from gui.guiInitializer import GuiInitializer
 from gui.models.cubeSolutionModel import CubeSolutionModel
 
-GuiInitializer(CubeSolutionModel())
+test = CubeSolutionModel()
+GuiInitializer(test)
+
+#i = 0

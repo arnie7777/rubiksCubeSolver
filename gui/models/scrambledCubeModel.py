@@ -7,3 +7,6 @@ class ScrambledCubeModel:
 
     def set_scrambled_cube_so_far(self, scrambled_cube: str) -> None:
         self.scrambled_cube = scrambled_cube
+
+    def get_length(self):
+        return len(self.scrambled_cube)

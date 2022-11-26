@@ -5,11 +5,12 @@ from gui.controllers.centerPositionController import CenterPositionController
 from gui.views.centerColorFrame import CenterColorFrame
 from gui.models.scrambledCubeModel import ScrambledCubeModel
 from gui.views.scrambledCubeFrame import ScrambledCubeFrame
+from gui.models.centerColorsModel import CenterColorsModel
 from gui.controllers.scrambledCubeController import ScrambledCubeController
 
 
 class GuiInitializer:
-    def __init__(self, cubeSolution: CubeSolutionModel) -> None:
+    def __init__(self, cube_solution_model: CubeSolutionModel) -> None:
         # create window/root widget
         window = tk.Tk()
         window.title('Rubik\'s cube solver')
@@ -18,8 +19,9 @@ class GuiInitializer:
         top_center_color_model: CenterColorModel = CenterColorModel()
         front_center_color_model: CenterColorModel = CenterColorModel()
         right_center_color_model: CenterColorModel = CenterColorModel()
+        center_colors_model: CenterColorsModel = CenterColorsModel(top_center_color_model, front_center_color_model,
+                                                                   right_center_color_model)
         scrambled_cube_model: ScrambledCubeModel = ScrambledCubeModel()
-        self.cubeSolution = cubeSolution  # model which will be used after gui has been shut down
 
         # create frames/views
         # create left frame for the center color selection frames
@@ -35,14 +37,17 @@ class GuiInitializer:
         right_frame = tk.Frame(window, bg='gray')
         right_frame.pack(side='left', anchor='nw', expand=True, fill='y')
 
-        # create scrambled cube frame to put into right frame
-        scrambled_cube_frame: ScrambledCubeFrame = ScrambledCubeFrame(right_frame)
+        # create scrambled cube frame to put into right frame,
+        # also takes in window, because ScrambledCubeFrame is the one that will
+        # destroy the window when the solving of the rubik's cube starts
+        scrambled_cube_frame: ScrambledCubeFrame = ScrambledCubeFrame(right_frame, window)
 
         # create controllers
         top_center_position_controller = CenterPositionController(top_center_color_model, top_center_color_frame)
         front_center_position_controller = CenterPositionController(front_center_color_model, front_center_color_frame)
         right_center_position_controller = CenterPositionController(right_center_color_model, right_center_color_frame)
-        scrambled_cube_controller = ScrambledCubeController(scrambled_cube_model, scrambled_cube_frame)
+        scrambled_cube_controller = ScrambledCubeController(scrambled_cube_model, center_colors_model,
+                                                            cube_solution_model, scrambled_cube_frame)
 
         # set controllers in the frame/views objects
         top_center_color_frame.set_controller(top_center_position_controller)
