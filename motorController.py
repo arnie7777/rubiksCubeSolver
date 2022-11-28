@@ -32,7 +32,10 @@ class MotorController:
             pass
 
         elif motor == 'front':
-            pass
+            self.in1: int = 31
+            self.in2: int = 36
+            self.in3: int = 37
+            self.in4: int = 38
 
         elif motor == 'right':
             self.in1: int = 11

@@ -10,6 +10,14 @@ def main():
     time.sleep(1)
     motor_organizer.rotate('L')
     time.sleep(1)
+    motor_organizer.rotate('F')
+    time.sleep(1)
+    motor_organizer.rotate('F')
+    time.sleep(1)
+    motor_organizer.rotate('L')
+    time.sleep(1)
+    motor_organizer.rotate('R')
+    time.sleep(1)
     
     motor_organizer.cleanup()
     del motor_organizer
