@@ -44,7 +44,10 @@ class MotorController:
             pass
 
         elif motor == 'left':
-            pass
+            self.in1: int = 16
+            self.in2: int = 18
+            self.in3: int = 22
+            self.in4: int = 29
 
         # setting up
         if not MotorController.mode_has_been_set:  # only true for the first instance

@@ -7,12 +7,9 @@ def main():
     motor_organizer = MotorsOrganizer()
     
     motor_organizer.rotate('R\'')
-    time.sleep(0.3)
-    motor_organizer.rotate('R')
-    time.sleep(0.3)
-    motor_organizer.rotate('R\'')
-    time.sleep(0.3)
-    motor_organizer.rotate('R2')
+    time.sleep(1)
+    motor_organizer.rotate('L')
+    time.sleep(1)
     
     motor_organizer.cleanup()
     del motor_organizer

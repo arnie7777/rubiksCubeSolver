@@ -9,7 +9,7 @@ class MotorsOrganizer:
         # self.front_controller = MotorController('front')
         self.right_controller = MotorController('right')
         # self.back_controller = MotorController('back')
-        # self.left_controller = MotorController('left')
+        self.left_controller = MotorController('left')
 
     def rotate(self, move: str) -> None:
         """If move is starts with 'U', then uses alg converter to convert the moves to be executed.
@@ -45,8 +45,7 @@ class MotorsOrganizer:
             # self.back_controller.rotate(move)
 
         elif move[0] == 'L':
-            pass
-            # self.left_controller.rotate(move)
+            self.left_controller.rotate(move)
 
     def cleanup(self) -> None:
         """GPIO clean up. Also deletes all the objects"""
@@ -56,6 +55,6 @@ class MotorsOrganizer:
         # del self.front_controller
         del self.right_controller
         # del self.back_controller
-        # del self.left_controller
+        del self.left_controller
 
         del self.algConverter
