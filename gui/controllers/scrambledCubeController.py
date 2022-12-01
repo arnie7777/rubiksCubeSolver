@@ -27,6 +27,9 @@ class ScrambledCubeController:
     def color_button_clicked(self, color: str, scrambled_cube_so_far: str) -> None:
         if self.__color_is_valid(color, scrambled_cube_so_far):
             scrambled_cube_so_far_update: str = scrambled_cube_so_far + color
+            length_of_scrambled_cube: int = self.__len_of_scrambled_colors_so_far(scrambled_cube_so_far_update)
+            if length_of_scrambled_cube % 9 == 0 and length_of_scrambled_cube < 54:
+                scrambled_cube_so_far_update += '\n'
             self.scrambled_cube_model.set_scrambled_cube_so_far(scrambled_cube_so_far_update)
             self.scrambled_cube_frame.add_color_success(scrambled_cube_so_far_update)
             return
@@ -36,6 +39,8 @@ class ScrambledCubeController:
 
     def undo_button_clicked(self, scrambled_cube_so_far: str) -> None:
         scrambled_cube_so_far_update: str = scrambled_cube_so_far[:-1]
+        if scrambled_cube_so_far[-1] == '\n':
+            scrambled_cube_so_far_update = scrambled_cube_so_far[:-2]
         self.scrambled_cube_model.set_scrambled_cube_so_far(scrambled_cube_so_far_update)
         self.scrambled_cube_frame.remove_last_color(scrambled_cube_so_far_update)
 
@@ -129,3 +134,10 @@ class ScrambledCubeController:
                 colors_appeared.append(previous_color)
         
         return cube_is_already_solved
+
+    def __len_of_scrambled_colors_so_far(self, scrambled_cube_so_far):
+        count: int = 0
+        for char in scrambled_cube_so_far:
+            if char != '\n':
+                count += 1
+        return count

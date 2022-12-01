@@ -12,7 +12,7 @@ class ScrambledCubeFrame:
         self.frame.pack(padx=10, pady=10)
 
         # create top label for the frame
-        tk.Label(self.frame, text=f'Enter scrambled cube').pack()
+        tk.Label(self.frame, text=f'Enter cube (order: U, D, F, R, B, L)').pack()
 
         # create empty label where the scrambled cube will be displayed
         self.scrambled_cube_label = tk.Label(self.frame)
