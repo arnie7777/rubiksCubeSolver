@@ -1,6 +1,5 @@
 class CubeSolutionModel:
     def __init__(self) -> None:
-        print('solution')
         self.solution: list[str] = []
 
     def get_solution(self) -> list[str]:
