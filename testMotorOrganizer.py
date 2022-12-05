@@ -3,6 +3,7 @@ import time
 
 
 def main():
+    """
     time.sleep(3)
     motor_organizer = MotorsOrganizer()
     
@@ -21,7 +22,7 @@ def main():
     
     motor_organizer.cleanup()
     del motor_organizer
-
+    """
 
 if __name__ == '__main__':
     main()

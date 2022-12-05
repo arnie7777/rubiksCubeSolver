@@ -3,7 +3,7 @@ from gui.models.cubeSolutionModel import CubeSolutionModel
 from gui.models.centerColorsModel import CenterColorsModel
 from colorSideMapper import ColorSideMapper
 from centerColorsValidator import CenterColorsValidator
-#from cubeSolver import CubeSolver
+from cubeSolver import CubeSolver
 import gui.views.scrambledCubeFrame as scf
 import gui.models.scrambledCubeModel as scm
 
@@ -22,7 +22,7 @@ class ScrambledCubeController:
 
         self.center_colors_validator: CenterColorsValidator = CenterColorsValidator()
         self.color_side_mapper: ColorSideMapper = ColorSideMapper()
-        #self.cube_solver = CubeSolver()
+        self.cube_solver = CubeSolver()
 
     def color_button_clicked(self, color: str, scrambled_cube_so_far: str) -> None:
         if self.__color_is_valid(color, scrambled_cube_so_far):
@@ -64,7 +64,7 @@ class ScrambledCubeController:
         scrambled_cube_color: str = self.scrambled_cube_model.get_scrambled_cube_so_far()
         for color in scrambled_cube_color:
             scrambled_cube += self.color_side_mapper.map_to_side(color)
-        print(scrambled_cube)
+
         # Change order to what the kociemba library accepts (which is U, R, F, D, L, B)
         scrambled_cube = \
             scrambled_cube[0:9] + \
@@ -73,29 +73,22 @@ class ScrambledCubeController:
             scrambled_cube[9:18] + \
             scrambled_cube[45:54] + \
             scrambled_cube[36:45]
-        print(scrambled_cube)
 
-        """
-        # outcomment here
         solution: list[str] = self.cube_solver.solve(scrambled_cube)
-        # try using the solver, to see if the scrambled cube is solvable
-        if solution[0] == '':  # if scrambled cube is invalid/not solvable
+        # Try using the solver, to see if the scrambled cube is solvable
+        if solution[0] == '':  # If scrambled cube is not solvable
             self.scrambled_cube_frame.start_solving_error('Not a valid scramble.')
             return
-        
 
-        # We must do this, because the kociemba library comes up with an algorithm,
+        # We must do this because the kociemba library comes up with an algorithm
         # which ends up with an solution, which doesn't make sense, when the cube is already solved.
-        # I think this should work.....
         if self.__cube_is_already_solved(scrambled_cube):
             self.scrambled_cube_frame.start_solving_error('Cube is already solved')
             return
         
-        # if scramble is valid (i.e. we have gotten a solution from the cube solver)
+        # If scramble is valid (i.e. we have gotten a solution from the cube solver)
         self.cube_solution_model.set_solution(solution)
         self.scrambled_cube_frame.start_solving_success()
-        # outcomment here
-        """
 
     def __color_is_valid(self, color: str, scrambled_cube_so_far: str) -> bool:
         """Checks if the same color occurs less than 9 times:
@@ -124,7 +117,7 @@ class ScrambledCubeController:
     def __cube_is_already_solved(self, scrambled_cube) -> bool:
         cube_is_already_solved = True
         colors_appeared = []
-        for i in range(1, scrambled_cube - 1):
+        for i in range(1, len(scrambled_cube) - 1):
             current_color = scrambled_cube[i]
             previous_color = scrambled_cube[i-1]
             if previous_color != current_color:
