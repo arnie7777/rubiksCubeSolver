@@ -51,7 +51,13 @@ class ScrambledCubeFrame:
         self.__create_messagebox(error_message)
 
     def start_solving_success(self) -> None:
-        self.window.destroy()
+        """Displays information about the solution"""
+        # todo display the following:
+        # solving time
+        # number of moves
+        # maybe the solution
+        # maybe clear all fields
+        pass
 
     def __create_button(self, color: str) -> None:
         tk.Button(self.frame, text=color, command=lambda: self.controller.color_button_clicked(

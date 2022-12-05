@@ -86,8 +86,13 @@ class ScrambledCubeController:
             self.scrambled_cube_frame.start_solving_error('Cube is already solved')
             return
         
-        # If scramble is valid (i.e. we have gotten a solution from the cube solver)
+        # Code reaches here if scramble is valid (i.e. we have gotten a solution from the cube solver)
         self.cube_solution_model.set_solution(solution)
+
+        # todo shut down touch screen
+        # start timer
+        # loop through solution and use motorOrganizer to solve the cube
+        
         self.scrambled_cube_frame.start_solving_success()
 
     def __color_is_valid(self, color: str, scrambled_cube_so_far: str) -> bool:
