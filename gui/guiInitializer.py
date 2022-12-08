@@ -10,7 +10,7 @@ from gui.controllers.scrambledCubeController import ScrambledCubeController
 
 
 class GuiInitializer:
-    def __init__(self, cube_solution_model: CubeSolutionModel) -> None:
+    def __init__(self) -> None:
         # create window/root widget
         window = tk.Tk()
         window.title('Rubik\'s cube solver')
@@ -47,7 +47,7 @@ class GuiInitializer:
         front_center_position_controller = CenterPositionController(front_center_color_model, front_center_color_frame)
         right_center_position_controller = CenterPositionController(right_center_color_model, right_center_color_frame)
         scrambled_cube_controller = ScrambledCubeController(scrambled_cube_model, center_colors_model,
-                                                            cube_solution_model, scrambled_cube_frame)
+                                                            scrambled_cube_frame)
 
         # set controllers in the frame/views objects
         top_center_color_frame.set_controller(top_center_position_controller)

@@ -14,15 +14,16 @@ class ScrambledCubeController:
     scrambled_cube_len_requirement: int = 54
 
     def __init__(self, scrambled_cube_model: ScrambledCubeModel, center_colors_model: CenterColorsModel,
-                 cube_solution_model: CubeSolutionModel, scrambled_cube_frame) -> None:
+                 scrambled_cube_frame) -> None:
+
         self.scrambled_cube_model: scm.ScrambledCubeModel = scrambled_cube_model
         self.center_colors_model: CenterColorsModel = center_colors_model
-        self.cube_solution_model: CubeSolutionModel = cube_solution_model
         self.scrambled_cube_frame: scf.ScrambledCubeFrame = scrambled_cube_frame
 
         self.center_colors_validator: CenterColorsValidator = CenterColorsValidator()
         self.color_side_mapper: ColorSideMapper = ColorSideMapper()
         self.cube_solver = CubeSolver()
+        self.solutionModel: CubeSolutionModel = CubeSolutionModel()
 
     def color_button_clicked(self, color: str, scrambled_cube_so_far: str) -> None:
         if self.__color_is_valid(color, scrambled_cube_so_far):
@@ -87,13 +88,17 @@ class ScrambledCubeController:
             return
         
         # Code reaches here if scramble is valid (i.e. we have gotten a solution from the cube solver)
-        self.cube_solution_model.set_solution(solution)
+        self.solutionModel.set_solution(solution)
+        print(self.solutionModel.get_solution())
 
-        # todo shut down touch screen
-        # start timer
+        # todo maybe shut down touchscreen
+        # update view => solving.. maybe countdown?
         # loop through solution and use motorOrganizer to solve the cube
-        
-        self.scrambled_cube_frame.start_solving_success()
+        # update view => solved in x seconds (maybe display the moves)
+        # power on screen (if has been shut down)
+
+        # probably use this frame for updating the view
+        # self.scrambled_cube_frame.start_solving_success()
 
     def __color_is_valid(self, color: str, scrambled_cube_so_far: str) -> bool:
         """Checks if the same color occurs less than 9 times:
@@ -130,7 +135,7 @@ class ScrambledCubeController:
                     cube_is_already_solved = False
                     break
                 colors_appeared.append(previous_color)
-        
+
         return cube_is_already_solved
 
     def __len_of_scrambled_colors_so_far(self, scrambled_cube_so_far):
