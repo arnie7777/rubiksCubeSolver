@@ -2,6 +2,7 @@ from gui.models.scrambledCubeModel import ScrambledCubeModel
 from gui.models.cubeSolutionModel import CubeSolutionModel
 from gui.models.centerColorsModel import CenterColorsModel
 from colorSideMapper import ColorSideMapper
+from algConverter import AlgConverter
 from centerColorsValidator import CenterColorsValidator
 from cubeSolver import CubeSolver
 import gui.views.scrambledCubeFrame as scf
@@ -89,7 +90,18 @@ class ScrambledCubeController:
         
         # Code reaches here if scramble is valid (i.e. we have gotten a solution from the cube solver)
         self.solutionModel.set_solution(solution)
-        print(self.solutionModel.get_solution())
+        solution: list[str] = self.solutionModel.get_solution()
+
+        # create new list for solution without u (after convertion)
+        solution_without_u: list[str] = []
+        alg_converter: AlgConverter = AlgConverter()
+
+        for move in solution:
+            if move[0] != 'U':
+                solution_without_u.append(move)
+                continue
+            solution_without_u.extend(alg_converter.convert_to_u(move))
+            alg_converter.clear_converted_moves()
 
         # todo maybe shut down touchscreen
         # update view => solving.. maybe countdown?

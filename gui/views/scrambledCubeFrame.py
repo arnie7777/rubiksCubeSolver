@@ -4,9 +4,7 @@ from gui.controllers.scrambledCubeController import ScrambledCubeController
 
 
 class ScrambledCubeFrame:
-    def __init__(self, right_frame: tk.Frame, window: tk.Tk) -> None:
-        self.window = window
-
+    def __init__(self, right_frame: tk.Frame) -> None:
         # create frame for scrambled cube
         self.frame = tk.Frame(right_frame, bg='orange')
         self.frame.pack(padx=10, pady=10)

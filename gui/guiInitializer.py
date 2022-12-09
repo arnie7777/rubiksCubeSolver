@@ -1,5 +1,4 @@
 import tkinter as tk
-from gui.models.cubeSolutionModel import CubeSolutionModel
 from gui.models.centerColorModel import CenterColorModel
 from gui.controllers.centerPositionController import CenterPositionController
 from gui.views.centerColorFrame import CenterColorFrame
@@ -40,7 +39,7 @@ class GuiInitializer:
         # create scrambled cube frame to put into right frame,
         # also takes in window, because ScrambledCubeFrame is the one that will
         # destroy the window when the solving of the rubik's cube starts
-        scrambled_cube_frame: ScrambledCubeFrame = ScrambledCubeFrame(right_frame, window)
+        scrambled_cube_frame: ScrambledCubeFrame = ScrambledCubeFrame(right_frame)
 
         # create controllers
         top_center_position_controller = CenterPositionController(top_center_color_model, top_center_color_frame)
