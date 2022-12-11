@@ -106,8 +106,9 @@ class ScrambledCubeController:
 
         # Create converter object to convert U moves such that top of the cube will not be moved
         alg_converter: AlgConverter = AlgConverter()
+        self.solution_without_u.clear()
 
-        # map solution to new solution without moving the U (the top)
+        # map solution to new solution to get rid of U (up)
         for move in solution:
             if move[0] != 'U':
                 self.solution_without_u.append(move)
@@ -115,7 +116,6 @@ class ScrambledCubeController:
             self.solution_without_u.extend(alg_converter.convert_to_u(move))
             alg_converter.clear_converted_moves()
 
-        # todo reset this after each solve
         estimated_time: float = 0
         for move in self.solution_without_u:
             if move[-1] == '2':
@@ -130,18 +130,18 @@ class ScrambledCubeController:
         t2 = Thread(target=lambda: self.__start_motors())
         t2.start()
 
+        # todo (I've not checked if this is the right place to do this)
         # toggle widgets with self.solving_frame.solving_done()
         # display final time and number of steps
 
     def __start_motors(self):
-        motor_organizer = MotorsOrganizer()  # todo initialize this only once
+        motor_organizer = MotorsOrganizer()
 
         for move in self.solution_without_u:
             motor_organizer.rotate(move)
 
-        motor_organizer.cleanup()  # todo initialize this only once
+        motor_organizer.cleanup()
         del motor_organizer
-        
 
     def __color_is_valid(self, color: str, scrambled_cube_so_far: str) -> bool:
         """Checks if the same color occurs less than 9 times:
