@@ -105,4 +105,5 @@ class MotorController:
 
     @classmethod
     def cleanup(cls) -> None:
+        MotorController.mode_has_been_set = False
         GPIO.cleanup()

@@ -130,21 +130,16 @@ class ScrambledCubeController:
         t2 = Thread(target=lambda: self.__start_motors())
         t2.start()
 
-        # todo start motors (in different thread i suppose)
-        # start motors
         # toggle widgets with self.solving_frame.solving_done()
         # display final time and number of steps
 
     def __start_motors(self):
-        motor_organizer = MotorsOrganizer()
-        solving_timer = Timer()
+        motor_organizer = MotorsOrganizer()  # todo initialize this only once
 
         for move in self.solution_without_u:
-            solving_timer.start()
             motor_organizer.rotate(move)
-            print(solving_timer.stop())
 
-        motor_organizer.cleanup()
+        motor_organizer.cleanup()  # todo initialize this only once
         del motor_organizer
         
 
