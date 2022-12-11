@@ -34,3 +34,7 @@ class CenterColorFrame:
 
     def __create_button(self, color: str) -> None:
         tk.Button(self.frame, text=color, command=lambda: self.controller.color_button_clicked(color)).pack(side='left')
+
+    def toggle_widgets(self, dis_or_enable: str):
+        for child in self.frame.winfo_children():
+            child.configure(state=dis_or_enable)

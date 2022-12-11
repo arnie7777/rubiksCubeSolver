@@ -1,3 +1,5 @@
+import threading
+
 from gui.models.scrambledCubeModel import ScrambledCubeModel
 from gui.models.cubeSolutionModel import CubeSolutionModel
 from gui.models.centerColorsModel import CenterColorsModel
@@ -5,8 +7,11 @@ from colorSideMapper import ColorSideMapper
 from algConverter import AlgConverter
 from centerColorsValidator import CenterColorsValidator
 from cubeSolver import CubeSolver
+from gui.views.solvingFrame import SolvingFrame
 import gui.views.scrambledCubeFrame as scf
 import gui.models.scrambledCubeModel as scm
+import time
+from threading import *
 
 
 class ScrambledCubeController:
@@ -15,7 +20,7 @@ class ScrambledCubeController:
     scrambled_cube_len_requirement: int = 54
 
     def __init__(self, scrambled_cube_model: ScrambledCubeModel, center_colors_model: CenterColorsModel,
-                 scrambled_cube_frame) -> None:
+                 scrambled_cube_frame, solving_frame: SolvingFrame) -> None:
 
         self.scrambled_cube_model: scm.ScrambledCubeModel = scrambled_cube_model
         self.center_colors_model: CenterColorsModel = center_colors_model
@@ -25,6 +30,8 @@ class ScrambledCubeController:
         self.color_side_mapper: ColorSideMapper = ColorSideMapper()
         self.cube_solver = CubeSolver()
         self.solutionModel: CubeSolutionModel = CubeSolutionModel()
+
+        self.solving_frame: SolvingFrame = solving_frame
 
     def color_button_clicked(self, color: str, scrambled_cube_so_far: str) -> None:
         if self.__color_is_valid(color, scrambled_cube_so_far):
@@ -47,6 +54,7 @@ class ScrambledCubeController:
         self.scrambled_cube_frame.remove_last_color(scrambled_cube_so_far_update)
 
     def start_solving_button_clicked(self):
+        # if center colors are invalid
         if not self.__center_colors_are_valid():
             self.scrambled_cube_frame.start_solving_error('Make sure the center colors are correct selected')
             return
@@ -57,17 +65,20 @@ class ScrambledCubeController:
                 f'Scrambled cube must be of length {ScrambledCubeController.scrambled_cube_len_requirement}')
             return
 
+        # configure mapping from the chosen center colors selected by the user
         self.__configure_color_side_mapping()
 
-        # Order will U, D, F, R, B, L which is the order the user will insert the scrambled cube.
-        # This is simply done because it's easier to follow than the kociemba library order which is
-        # U, R, F, D, L, B
+        # map colors to side, because kociemba library does not accept colors. E.g. if user chooses top color to
+        # be W (white) then w will be mapped to U (up) and Y (yellow) will be mapped to D (down)
         scrambled_cube: str = ''
         scrambled_cube_color: str = self.scrambled_cube_model.get_scrambled_cube_so_far()
         for color in scrambled_cube_color:
             scrambled_cube += self.color_side_mapper.map_to_side(color)
 
         # Change order to what the kociemba library accepts (which is U, R, F, D, L, B)
+        # Order entered by the user is U, D, F, R, B, L
+        # This is simply done because it's easier for the user to enter this order rather than the
+        # kociemba library order
         scrambled_cube = \
             scrambled_cube[0:9] + \
             scrambled_cube[27:36] + \
@@ -92,10 +103,11 @@ class ScrambledCubeController:
         self.solutionModel.set_solution(solution)
         solution: list[str] = self.solutionModel.get_solution()
 
-        # create new list for solution without u (after convertion)
+        # create new list for solution without u (after conversion)
         solution_without_u: list[str] = []
         alg_converter: AlgConverter = AlgConverter()
 
+        # map solution to new solution without moving the U (the top)
         for move in solution:
             if move[0] != 'U':
                 solution_without_u.append(move)
@@ -103,14 +115,21 @@ class ScrambledCubeController:
             solution_without_u.extend(alg_converter.convert_to_u(move))
             alg_converter.clear_converted_moves()
 
-        # todo maybe shut down touchscreen
-        # update view => solving.. maybe countdown?
-        # loop through solution and use motorOrganizer to solve the cube
-        # update view => solved in x seconds (maybe display the moves)
-        # power on screen (if has been shut down)
+        estimated_time: float = 0
+        for move in solution_without_u:
+            if move[-1] == '2':
+                estimated_time += 2.4
+                continue
+            estimated_time += 1.2
 
-        # probably use this frame for updating the view
-        # self.scrambled_cube_frame.start_solving_success()
+        # create new thread to update view
+        t1 = Thread(target=lambda: self.solving_frame.start_solving_success(estimated_time))
+        t1.start()
+
+        # todo start motors (in different thread i suppose)
+        # start motors
+        # toggle widgets with self.solving_frame.solving_done()
+        # display final time and maybe solution and number of steps
 
     def __color_is_valid(self, color: str, scrambled_cube_so_far: str) -> bool:
         """Checks if the same color occurs less than 9 times:
@@ -125,10 +144,11 @@ class ScrambledCubeController:
         return False
 
     def __configure_color_side_mapping(self) -> None:
-        self.color_side_mapper.configure_top_front_right_map(
-            self.center_colors_model.get_top_color_model().get_center_color(),
-            self.center_colors_model.get_front_color_model().get_center_color(),
-            self.center_colors_model.get_right_color_model().get_center_color())
+        top_color: str = self.center_colors_model.get_top_color_model().get_center_color()
+        front_color: str = self.center_colors_model.get_front_color_model().get_center_color()
+        right_color: str = self.center_colors_model.get_right_color_model().get_center_color()
+
+        self.color_side_mapper.configure_top_front_right_map(top_color, front_color, right_color)
 
     def __center_colors_are_valid(self) -> bool:
         return self.center_colors_validator.center_colors_are_valid(

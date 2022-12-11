@@ -5,6 +5,8 @@ from gui.controllers.scrambledCubeController import ScrambledCubeController
 
 class ScrambledCubeFrame:
     def __init__(self, right_frame: tk.Frame) -> None:
+        self.right_frame = right_frame
+
         # create frame for scrambled cube
         self.frame = tk.Frame(right_frame, bg='orange')
         self.frame.pack(padx=10, pady=10)
@@ -45,6 +47,9 @@ class ScrambledCubeFrame:
     def remove_last_color(self, scrambled_cube_so_far_update):
         self.scrambled_cube_label.config(text=scrambled_cube_so_far_update)
 
+    def test(self, i):
+        self.scrambled_cube_label.config(text=f'{i}')
+
     def start_solving_error(self, error_message: str) -> None:
         self.__create_messagebox(error_message)
 
@@ -63,3 +68,13 @@ class ScrambledCubeFrame:
 
     def __create_messagebox(self, error_message: str):
         tkinter.messagebox.showinfo(title='Error occurred', message=error_message)
+
+    def toggle_widgets(self, dis_or_enable: str):
+        for child in self.frame.winfo_children():
+            child.configure(state=dis_or_enable)
+
+        for child in self.right_frame.winfo_children():
+            if child.widgetName == 'frame':
+                continue
+            child.configure(state=dis_or_enable)
+

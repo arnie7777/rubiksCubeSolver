@@ -1,4 +1,5 @@
 import tkinter as tk
+from widgetToggler import WidgetToggler
 from gui.models.centerColorModel import CenterColorModel
 from gui.controllers.centerPositionController import CenterPositionController
 from gui.views.centerColorFrame import CenterColorFrame
@@ -6,6 +7,7 @@ from gui.models.scrambledCubeModel import ScrambledCubeModel
 from gui.views.scrambledCubeFrame import ScrambledCubeFrame
 from gui.models.centerColorsModel import CenterColorsModel
 from gui.controllers.scrambledCubeController import ScrambledCubeController
+from gui.views.solvingFrame import SolvingFrame
 
 
 class GuiInitializer:
@@ -41,17 +43,23 @@ class GuiInitializer:
         # destroy the window when the solving of the rubik's cube starts
         scrambled_cube_frame: ScrambledCubeFrame = ScrambledCubeFrame(right_frame)
 
+        # create solvingFrame to put into right frame
+        solving_frame: SolvingFrame = SolvingFrame(right_frame)
+        solving_frame.set_widget_disabler(WidgetToggler(top_center_color_frame, front_center_color_frame,
+                                                        right_center_color_frame, scrambled_cube_frame, solving_frame))
+
         # create controllers
         top_center_position_controller = CenterPositionController(top_center_color_model, top_center_color_frame)
         front_center_position_controller = CenterPositionController(front_center_color_model, front_center_color_frame)
         right_center_position_controller = CenterPositionController(right_center_color_model, right_center_color_frame)
         scrambled_cube_controller = ScrambledCubeController(scrambled_cube_model, center_colors_model,
-                                                            scrambled_cube_frame)
+                                                            scrambled_cube_frame, solving_frame)
 
         # set controllers in the frame/views objects
         top_center_color_frame.set_controller(top_center_position_controller)
         front_center_color_frame.set_controller(front_center_position_controller)
         right_center_color_frame.set_controller(right_center_position_controller)
         scrambled_cube_frame.set_controller(scrambled_cube_controller)
+        solving_frame.set_controller(scrambled_cube_controller)
 
         window.mainloop()
