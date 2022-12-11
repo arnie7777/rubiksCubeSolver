@@ -28,7 +28,7 @@ class SolvingFrame:
         self.widget_disabler = widget_disabler
 
     def start_solving_success(self, solving_time: float) -> None:
-        self.widget_disabler.toggle_widgets_in_frames()
+        # self.widget_disabler.toggle_widgets_in_frames()
         for i in range(round(solving_time), -1, -1):
             time.sleep(1)
             self.timer_label.config(text=f'Solving...\nAbout {i} seconds left')

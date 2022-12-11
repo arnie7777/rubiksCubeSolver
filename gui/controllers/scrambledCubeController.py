@@ -1,5 +1,3 @@
-import threading
-
 from gui.models.scrambledCubeModel import ScrambledCubeModel
 from gui.models.cubeSolutionModel import CubeSolutionModel
 from gui.models.centerColorsModel import CenterColorsModel
@@ -8,9 +6,9 @@ from algConverter import AlgConverter
 from centerColorsValidator import CenterColorsValidator
 from cubeSolver import CubeSolver
 from gui.views.solvingFrame import SolvingFrame
+from motorsOrganizer import MotorsOrganizer
 import gui.views.scrambledCubeFrame as scf
 import gui.models.scrambledCubeModel as scm
-import time
 from threading import *
 
 
@@ -32,6 +30,8 @@ class ScrambledCubeController:
         self.solutionModel: CubeSolutionModel = CubeSolutionModel()
 
         self.solving_frame: SolvingFrame = solving_frame
+
+        self.solution_without_u: list[str] = []
 
     def color_button_clicked(self, color: str, scrambled_cube_so_far: str) -> None:
         if self.__color_is_valid(color, scrambled_cube_so_far):
@@ -103,33 +103,45 @@ class ScrambledCubeController:
         self.solutionModel.set_solution(solution)
         solution: list[str] = self.solutionModel.get_solution()
 
-        # create new list for solution without u (after conversion)
-        solution_without_u: list[str] = []
+        # Create converter object to convert U moves such that top of the cube will not be moved
         alg_converter: AlgConverter = AlgConverter()
 
         # map solution to new solution without moving the U (the top)
         for move in solution:
             if move[0] != 'U':
-                solution_without_u.append(move)
+                self.solution_without_u.append(move)
                 continue
-            solution_without_u.extend(alg_converter.convert_to_u(move))
+            self.solution_without_u.extend(alg_converter.convert_to_u(move))
             alg_converter.clear_converted_moves()
 
+        # todo reset this after each solve
         estimated_time: float = 0
-        for move in solution_without_u:
+        for move in self.solution_without_u:
             if move[-1] == '2':
                 estimated_time += 2.4
                 continue
             estimated_time += 1.2
 
-        # create new thread to update view
+        # create new thread to update view with estimated time remaining
         t1 = Thread(target=lambda: self.solving_frame.start_solving_success(estimated_time))
         t1.start()
+
+        t2 = Thread(target=lambda: self.__start_motors())
+        t2.start()
 
         # todo start motors (in different thread i suppose)
         # start motors
         # toggle widgets with self.solving_frame.solving_done()
         # display final time and number of steps
+
+    def __start_motors(self):
+        motor_organizer = MotorsOrganizer()
+
+        for move in self.solution_without_u:
+            motor_organizer.rotate(move)
+
+        motor_organizer.cleanup()
+        del motor_organizer
 
     def __color_is_valid(self, color: str, scrambled_cube_so_far: str) -> bool:
         """Checks if the same color occurs less than 9 times:

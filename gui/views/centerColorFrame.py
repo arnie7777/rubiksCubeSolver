@@ -1,3 +1,4 @@
+import threading
 import tkinter as tk
 import gui.controllers.centerPositionController as cpc
 
@@ -31,6 +32,8 @@ class CenterColorFrame:
     def update_selected_color(self, color: str) -> None:
         """Updates the label to display the selected color"""
         self.selected_color_label.config(text=color)
+        for thread in threading.enumerate():
+            print(thread.name)
 
     def __create_button(self, color: str) -> None:
         tk.Button(self.frame, text=color, command=lambda: self.controller.color_button_clicked(color)).pack(side='left')
