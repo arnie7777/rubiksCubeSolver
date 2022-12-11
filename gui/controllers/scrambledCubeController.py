@@ -10,6 +10,7 @@ from motorsOrganizer import MotorsOrganizer
 import gui.views.scrambledCubeFrame as scf
 import gui.models.scrambledCubeModel as scm
 from threading import *
+from timer import Timer
 
 
 class ScrambledCubeController:
@@ -118,9 +119,9 @@ class ScrambledCubeController:
         estimated_time: float = 0
         for move in self.solution_without_u:
             if move[-1] == '2':
-                estimated_time += 2.4
+                estimated_time += 2.15
                 continue
-            estimated_time += 1.2
+            estimated_time += 1.075
 
         # create new thread to update view with estimated time remaining
         t1 = Thread(target=lambda: self.solving_frame.start_solving_success(estimated_time))
@@ -136,12 +137,16 @@ class ScrambledCubeController:
 
     def __start_motors(self):
         motor_organizer = MotorsOrganizer()
+        solving_timer = Timer()
 
         for move in self.solution_without_u:
+            solving_timer.start()
             motor_organizer.rotate(move)
+            print(solving_timer.stop())
 
         motor_organizer.cleanup()
         del motor_organizer
+        
 
     def __color_is_valid(self, color: str, scrambled_cube_so_far: str) -> bool:
         """Checks if the same color occurs less than 9 times:
