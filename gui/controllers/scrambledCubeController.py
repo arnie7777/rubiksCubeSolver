@@ -129,7 +129,7 @@ class ScrambledCubeController:
         # todo start motors (in different thread i suppose)
         # start motors
         # toggle widgets with self.solving_frame.solving_done()
-        # display final time and maybe solution and number of steps
+        # display final time and number of steps
 
     def __color_is_valid(self, color: str, scrambled_cube_so_far: str) -> bool:
         """Checks if the same color occurs less than 9 times:
