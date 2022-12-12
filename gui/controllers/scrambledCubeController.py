@@ -1,3 +1,5 @@
+import time
+
 from gui.models.scrambledCubeModel import ScrambledCubeModel
 from gui.models.cubeSolutionModel import CubeSolutionModel
 from gui.models.centerColorsModel import CenterColorsModel
@@ -6,7 +8,7 @@ from algConverter import AlgConverter
 from centerColorsValidator import CenterColorsValidator
 from cubeSolver import CubeSolver
 from gui.views.solvingFrame import SolvingFrame
-from motorsOrganizer import MotorsOrganizer
+# from motorsOrganizer import MotorsOrganizer
 import gui.views.scrambledCubeFrame as scf
 import gui.models.scrambledCubeModel as scm
 from threading import *
@@ -127,14 +129,15 @@ class ScrambledCubeController:
         t1 = Thread(target=lambda: self.solving_frame.start_solving_success(estimated_time))
         t1.start()
 
-        t2 = Thread(target=lambda: self.__start_motors())
+        t2 = Thread(target=lambda: self.__start_motors(estimated_time))
         t2.start()
 
         # todo (I've not checked if this is the right place to do this)
         # toggle widgets with self.solving_frame.solving_done()
         # display final time and number of steps
 
-    def __start_motors(self):
+    def __start_motors(self, test):
+        """
         motor_organizer = MotorsOrganizer()
 
         for move in self.solution_without_u:
@@ -142,6 +145,10 @@ class ScrambledCubeController:
 
         motor_organizer.cleanup()
         del motor_organizer
+        """
+        for i in range(round(test)):
+            print('Visualize solving...')
+            time.sleep(1)
 
     def __color_is_valid(self, color: str, scrambled_cube_so_far: str) -> bool:
         """Checks if the same color occurs less than 9 times:
