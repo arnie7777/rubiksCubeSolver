@@ -14,7 +14,7 @@ class GuiInitializer:
     def __init__(self) -> None:
         # create window/root widget
         window = tk.Tk()
-        window.geometry('554x300')
+        window.geometry('556x267')
         window.title('Rubik\'s cube solver')
 
         # create models
@@ -27,7 +27,7 @@ class GuiInitializer:
 
         # create frames/views
         # create left frame for the center color selection frames
-        left_frame = tk.Frame(window, bg='black')
+        left_frame = tk.Frame(window, bg='gray')
         left_frame.pack(side='left', anchor='nw', expand=True, fill='y')
 
         # create instances of center color frames to put into left frame

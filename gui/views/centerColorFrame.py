@@ -6,22 +6,25 @@ import gui.controllers.centerPositionController as cpc
 class CenterColorFrame:
     def __init__(self, left_frame: tk.Frame, center_position: str) -> None:
         # create frame for center color of the cube (use left_frame as parent frame)
-        self.frame = tk.Frame(left_frame, bg='orange')
-        self.frame.pack(padx=10, pady=10)
+        self.frame = tk.Frame(left_frame)
+        self.frame.pack(padx=1, pady=1)
+        if center_position == 'front':
+            self.frame.pack(padx=1, pady=39)
+        
         
         # create top label for the frame
-        tk.Label(self.frame, text=f'Enter {center_position} center color of the cube').pack()
+        tk.Label(self.frame, font=('Arial', 8), text=f'Enter {center_position} center color of the cube').pack()
 
         # create empty label where the chosen color by the user will be displayed
-        self.selected_color_label = tk.Label(self.frame)
+        self.selected_color_label = tk.Label(self.frame, font=('Arial', 8))
         self.selected_color_label.pack()
 
-        self.__create_button('White')
-        self.__create_button('Yellow')
-        self.__create_button('Red')
-        self.__create_button('Orange')
-        self.__create_button('Blue')
-        self.__create_button('Green')
+        self.__create_button('White', '#FFFFFF')
+        self.__create_button('Yellow', '#FFED01')
+        self.__create_button('Red', '#FF2E2E')
+        self.__create_button('Orange', '#FF6600')
+        self.__create_button('Blue', '#006EE6')
+        self.__create_button('Green', '#08f26E')
 
         self.controller: cpc.CenterPositionController = None
 
@@ -29,14 +32,13 @@ class CenterColorFrame:
         """Sets the controller to take care of events from this view/frame"""
         self.controller = controller
 
-    def update_selected_color(self, color: str) -> None:
+    def update_selected_color(self, color_text: str, color: str) -> None:
         """Updates the label to display the selected color"""
-        self.selected_color_label.config(text=color)
-        for thread in threading.enumerate():
-            print(thread.name)
+        self.selected_color_label.config(text=color_text, bg=color)
+    
 
-    def __create_button(self, color: str) -> None:
-        tk.Button(self.frame, text=color, command=lambda: self.controller.color_button_clicked(color)).pack(side='left')
+    def __create_button(self, color_text: str, color: str) -> None:
+        tk.Button(self.frame, text=color_text, bg=color, width='3', font=('Arial', 8), command=lambda: self.controller.color_button_clicked(color_text, color)).pack(side='left')
 
     def toggle_widgets(self, dis_or_enable: str):
         for child in self.frame.winfo_children():

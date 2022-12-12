@@ -8,32 +8,32 @@ class ScrambledCubeFrame:
         self.right_frame = right_frame
 
         # create frame for scrambled cube
-        self.frame = tk.Frame(right_frame, bg='orange')
-        self.frame.pack(padx=10, pady=10)
+        self.frame = tk.Frame(right_frame)
+        self.frame.pack(padx=1, pady=1)
 
         # create top label for the frame
-        tk.Label(self.frame, text=f'Enter cube (order: U, D, F, R, B, L)').pack()
+        tk.Label(self.frame, font=('Arial', 8), text=f'Enter cube (order: U, D, F, R, B, L)').pack()
         # short 'YWYYWYYWY\nWYWWYWWYW\nOROOROORO\nBBBBBBBBB\nRORRORROR\nGGGGGGGGG'
         # long 'WWWWWWWWW\nYYYYYYYYY\nGGGRRRRRR\nRRRBBBBBB\nBBBOOOOOO\nOOOGGGGGG'
         # create empty label where the scrambled cube will be displayed
-        self.scrambled_cube_label = tk.Label(self.frame, text='YWYYWYYWY\nWYWWYWWYW\nOROOROORO\nBBBBBBBBB\nRORRORROR\nGGGGGGGGG')
+        self.scrambled_cube_label = tk.Label(self.frame, font=('Arial', 8), text='YWYYWYYWY\nWYWWYWWYW\nOROOROORO\nBBBBBBBBB\nRORRORROR\nGGGGGGGGG')
         self.scrambled_cube_label.pack()
 
-        self.__create_button('White')
-        self.__create_button('Yellow')
-        self.__create_button('Red')
-        self.__create_button('Orange')
-        self.__create_button('Blue')
-        self.__create_button('Green')
+        self.__create_button('White', '#FFFFFF')
+        self.__create_button('Yellow', '#FFED01')
+        self.__create_button('Red', '#FF2E2E')
+        self.__create_button('Orange', '#FF6600')
+        self.__create_button('Blue', '#006EE6')
+        self.__create_button('Green', '#08f26E')
 
         # put undo and done buttons directly into right_frame
-        tk.Button(right_frame, text='Undo', command=lambda: self.controller.undo_button_clicked(
-            self.scrambled_cube_label.cget('text'))).pack()
+        tk.Button(right_frame, text='Undo', width='3', font=('Arial', 8), command=lambda: self.controller.undo_button_clicked(
+            self.scrambled_cube_label.cget('text'))).pack(pady=2)
 
-        tk.Button(right_frame, text='Clear all', command=lambda: self.controller.clear_button_clicked()).pack(pady=2)
+        tk.Button(right_frame, text='Clear all', width='5', font=('Arial', 8), command=lambda: self.controller.clear_button_clicked()).pack(pady=2)
 
         tk.Button(
-            right_frame, text='Start solving', command=lambda: self.controller.start_solving_button_clicked()).pack()
+            right_frame, text='Start solving', width='10', font=('Arial', 8), command=lambda: self.controller.start_solving_button_clicked()).pack(pady=2)
 
         self.controller: ScrambledCubeController = None
 
@@ -56,9 +56,11 @@ class ScrambledCubeFrame:
     def start_solving_error(self, error_message: str) -> None:
         self.__create_messagebox(error_message)
 
-    def __create_button(self, color: str) -> None:
-        tk.Button(self.frame, text=color, command=lambda: self.controller.color_button_clicked(
-            color[0], self.scrambled_cube_label.cget('text'))).pack(side='left')
+    def __create_button(self, color_text: str, color: str) -> None:
+        btn = tk.Button(self.frame, text=color_text, bg=color, width='3', font=('Arial', 8), command=lambda: self.controller.color_button_clicked(
+            color_text[0], color, self.scrambled_cube_label.cget('text')))
+        btn.pack(side='left')
+
 
     def __create_messagebox(self, error_message: str):
         tkinter.messagebox.showinfo(title='Error occurred', message=error_message)
@@ -71,4 +73,3 @@ class ScrambledCubeFrame:
             if child.widgetName == 'frame':
                 continue
             child.configure(state=dis_or_enable)
-

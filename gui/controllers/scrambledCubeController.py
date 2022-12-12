@@ -37,9 +37,9 @@ class ScrambledCubeController:
 
         self.solution_without_u: list[str] = []
 
-    def color_button_clicked(self, color: str, scrambled_cube_so_far: str) -> None:
-        if self.__color_is_valid(color, scrambled_cube_so_far):
-            scrambled_cube_so_far_update: str = scrambled_cube_so_far + color
+    def color_button_clicked(self, color_letter: str, color, scrambled_cube_so_far: str) -> None:
+        if self.__color_is_valid(color_letter, scrambled_cube_so_far):
+            scrambled_cube_so_far_update: str = scrambled_cube_so_far + color_letter
             length_of_scrambled_cube: int = self.__len_of_scrambled_colors_so_far(scrambled_cube_so_far_update)
             if length_of_scrambled_cube % 9 == 0 and length_of_scrambled_cube < 54:
                 scrambled_cube_so_far_update += '\n'
