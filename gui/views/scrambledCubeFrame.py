@@ -13,9 +13,10 @@ class ScrambledCubeFrame:
 
         # create top label for the frame
         tk.Label(self.frame, text=f'Enter cube (order: U, D, F, R, B, L)').pack()
-
+        # short 'YWYYWYYWY\nWYWWYWWYW\nOROOROORO\nBBBBBBBBB\nRORRORROR\nGGGGGGGGG'
+        # long 'WWWWWWWWW\nYYYYYYYYY\nGGGRRRRRR\nRRRBBBBBB\nBBBOOOOOO\nOOOGGGGGG'
         # create empty label where the scrambled cube will be displayed
-        self.scrambled_cube_label = tk.Label(self.frame)
+        self.scrambled_cube_label = tk.Label(self.frame, text='YWYYWYYWY\nWYWWYWWYW\nOROOROORO\nBBBBBBBBB\nRORRORROR\nGGGGGGGGG')
         self.scrambled_cube_label.pack()
 
         self.__create_button('White')

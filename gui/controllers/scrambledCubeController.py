@@ -137,6 +137,8 @@ class ScrambledCubeController:
         # display final time and number of steps
 
     def __start_motors(self, test):
+        solving_timer: Timer = Timer()
+        solving_timer.start()
         """
         motor_organizer = MotorsOrganizer()
 
@@ -147,8 +149,11 @@ class ScrambledCubeController:
         del motor_organizer
         """
         for i in range(round(test)):
-            print('Visualize solving...')
+            print(f'Visualize solving... {i}')
             time.sleep(1)
+
+        solving_time = solving_timer.stop()
+        self.solving_frame.solving_done(solving_time)
 
     def __color_is_valid(self, color: str, scrambled_cube_so_far: str) -> bool:
         """Checks if the same color occurs less than 9 times:
