@@ -37,7 +37,7 @@ class ScrambledCubeController:
 
         self.solution_without_u: list[str] = []
 
-    def color_button_clicked(self, color_letter: str, color, scrambled_cube_so_far: str) -> None:
+    def color_button_clicked(self, color_letter: str, scrambled_cube_so_far: str) -> None:
         if self.__color_is_valid(color_letter, scrambled_cube_so_far):
             scrambled_cube_so_far_update: str = scrambled_cube_so_far + color_letter
             length_of_scrambled_cube: int = self.__len_of_scrambled_colors_so_far(scrambled_cube_so_far_update)
@@ -60,6 +60,7 @@ class ScrambledCubeController:
         self.scrambled_cube_frame.remove_last_color(scrambled_cube_so_far_update)
 
     def clear_button_clicked(self):
+        self.solving_frame.hide_actual_solving_time()
         self.scrambled_cube_frame.clear_scramble('')
 
     def start_solving_button_clicked(self):

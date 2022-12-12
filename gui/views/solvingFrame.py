@@ -1,9 +1,7 @@
-import threading
 import time
 import tkinter as tk
 import widgetToggler as wd
 import gui.controllers.scrambledCubeController as scc
-from threading import *
 
 
 class SolvingFrame:
@@ -29,7 +27,7 @@ class SolvingFrame:
         self.widget_disabler = widget_disabler
 
     def start_solving_success(self, solving_time: float) -> None:
-        #self.widget_disabler.toggle_widgets_in_frames()
+        self.widget_disabler.toggle_widgets_in_frames()
         self.actual_solving_time_label.pack_forget()
         self.count_down_label.pack()
         for i in range(round(solving_time), -1, -1):
@@ -37,8 +35,11 @@ class SolvingFrame:
             time.sleep(1)
 
     def solving_done(self, solving_time: float):
-        #self.widget_disabler.toggle_widgets_in_frames()
+        self.widget_disabler.toggle_widgets_in_frames()
         self.count_down_label.pack_forget()
         self.actual_solving_time_label.config(text=f'Cube was solved in {round(solving_time, 2)} seconds')
         self.actual_solving_time_label.pack()
+
+    def hide_actual_solving_time(self):
+        self.actual_solving_time_label.pack_forget()
 

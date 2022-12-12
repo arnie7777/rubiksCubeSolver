@@ -64,7 +64,7 @@ class ScrambledCubeFrame:
     def __create_button(self, color_text: str, color: str) -> None:
         btn = tk.Button(self.frame, text=color_text, bg=color, width='3', font=('Arial', 8),
                         command=lambda: self.controller.color_button_clicked(
-                            color_text[0], color, self.scrambled_cube_label.cget('text')))
+                            color_text[0], self.scrambled_cube_label.cget('text')))
         btn.pack(side='left')
 
     def __create_messagebox(self, error_message: str):
