@@ -14,6 +14,7 @@ class GuiInitializer:
     def __init__(self) -> None:
         # create window/root widget
         window = tk.Tk()
+        window.geometry('554x300')
         window.title('Rubik\'s cube solver')
 
         # create models
@@ -53,7 +54,7 @@ class GuiInitializer:
         front_center_position_controller = CenterPositionController(front_center_color_model, front_center_color_frame)
         right_center_position_controller = CenterPositionController(right_center_color_model, right_center_color_frame)
         scrambled_cube_controller = ScrambledCubeController(scrambled_cube_model, center_colors_model,
-                                                            scrambled_cube_frame, solving_frame)
+                                                            scrambled_cube_frame, solving_frame, window)
 
         # set controllers in the frame/views objects
         top_center_color_frame.set_controller(top_center_position_controller)

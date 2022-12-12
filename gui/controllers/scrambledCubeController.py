@@ -21,7 +21,8 @@ class ScrambledCubeController:
     scrambled_cube_len_requirement: int = 54
 
     def __init__(self, scrambled_cube_model: ScrambledCubeModel, center_colors_model: CenterColorsModel,
-                 scrambled_cube_frame, solving_frame: SolvingFrame) -> None:
+                 scrambled_cube_frame, solving_frame: SolvingFrame, window) -> None:
+        self.widow = window
 
         self.scrambled_cube_model: scm.ScrambledCubeModel = scrambled_cube_model
         self.center_colors_model: CenterColorsModel = center_colors_model
@@ -50,11 +51,18 @@ class ScrambledCubeController:
             f'A color can at most occur {ScrambledCubeController.max_color_occurrence} times')
 
     def undo_button_clicked(self, scrambled_cube_so_far: str) -> None:
+        print("The width of Tkinter window:", self.widow.winfo_width())
+        print("The height of Tkinter window:", self.widow.winfo_height())
+        if len(scrambled_cube_so_far) == 0:
+            return
         scrambled_cube_so_far_update: str = scrambled_cube_so_far[:-1]
         if scrambled_cube_so_far[-1] == '\n':
             scrambled_cube_so_far_update = scrambled_cube_so_far[:-2]
         self.scrambled_cube_model.set_scrambled_cube_so_far(scrambled_cube_so_far_update)
         self.scrambled_cube_frame.remove_last_color(scrambled_cube_so_far_update)
+
+    def clear_button_clicked(self):
+        self.scrambled_cube_frame.clear_scramble('')
 
     def start_solving_button_clicked(self):
         # if center colors are invalid
@@ -131,10 +139,6 @@ class ScrambledCubeController:
 
         t2 = Thread(target=lambda: self.__start_motors(estimated_time))
         t2.start()
-
-        # todo (I've not checked if this is the right place to do this)
-        # toggle widgets with self.solving_frame.solving_done()
-        # display final time and number of steps
 
     def __start_motors(self, test):
         solving_timer: Timer = Timer()

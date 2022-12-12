@@ -30,6 +30,8 @@ class ScrambledCubeFrame:
         tk.Button(right_frame, text='Undo', command=lambda: self.controller.undo_button_clicked(
             self.scrambled_cube_label.cget('text'))).pack()
 
+        tk.Button(right_frame, text='Clear all', command=lambda: self.controller.clear_button_clicked()).pack(pady=2)
+
         tk.Button(
             right_frame, text='Start solving', command=lambda: self.controller.start_solving_button_clicked()).pack()
 
@@ -48,20 +50,11 @@ class ScrambledCubeFrame:
     def remove_last_color(self, scrambled_cube_so_far_update):
         self.scrambled_cube_label.config(text=scrambled_cube_so_far_update)
 
-    def test(self, i):
-        self.scrambled_cube_label.config(text=f'{i}')
+    def clear_scramble(self, empty_scramble: str):
+        self.scrambled_cube_label.config(text=empty_scramble)
 
     def start_solving_error(self, error_message: str) -> None:
         self.__create_messagebox(error_message)
-
-    def start_solving_success(self) -> None:
-        """Displays information about the solution"""
-        # todo display the following:
-        # solving time
-        # number of moves
-        # maybe the solution
-        # maybe clear all fields
-        pass
 
     def __create_button(self, color: str) -> None:
         tk.Button(self.frame, text=color, command=lambda: self.controller.color_button_clicked(
