@@ -51,8 +51,6 @@ class ScrambledCubeController:
             f'A color can at most occur {ScrambledCubeController.max_color_occurrence} times')
 
     def undo_button_clicked(self, scrambled_cube_so_far: str) -> None:
-        print("The width of Tkinter window:", self.widow.winfo_width())
-        print("The height of Tkinter window:", self.widow.winfo_height())
         if len(scrambled_cube_so_far) == 0:
             return
         scrambled_cube_so_far_update: str = scrambled_cube_so_far[:-1]
@@ -140,7 +138,7 @@ class ScrambledCubeController:
         t2 = Thread(target=lambda: self.__start_motors(estimated_time))
         t2.start()
 
-    def __start_motors(self, test):
+    def __start_motors(self, test_remove_later):
         solving_timer: Timer = Timer()
         solving_timer.start()
         """
@@ -152,7 +150,7 @@ class ScrambledCubeController:
         motor_organizer.cleanup()
         del motor_organizer
         """
-        for i in range(round(test)):
+        for i in range(round(test_remove_later)):
             print(f'Visualize solving... {i}')
             time.sleep(1)
 
