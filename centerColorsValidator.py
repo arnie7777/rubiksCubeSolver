@@ -11,7 +11,7 @@ class CenterColorsValidator:
         red_top_possibilities: list[str] = ['W', 'G', 'Y', 'B']
         self.__configure_combinations(red_top_possibilities, 'R')
 
-        orange_top_possibilities: list[str] = ['W', 'B', 'O', 'G']
+        orange_top_possibilities: list[str] = ['W', 'B', 'Y', 'G']
         self.__configure_combinations(orange_top_possibilities, 'O')
 
         blue_top_possibilities: list[str] = ['W', 'R', 'Y', 'O']
