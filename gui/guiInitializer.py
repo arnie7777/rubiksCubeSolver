@@ -14,7 +14,7 @@ class GuiInitializer:
     def __init__(self) -> None:
         # create window/root widget
         window = tk.Tk()
-        window.geometry('556x267')
+        window.geometry('800x415')
         window.title('Rubik\'s cube solver')
 
         # create models
