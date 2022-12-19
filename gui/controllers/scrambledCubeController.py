@@ -8,7 +8,7 @@ from algConverter import AlgConverter
 from centerColorsValidator import CenterColorsValidator
 from cubeSolver import CubeSolver
 from gui.views.solvingFrame import SolvingFrame
-# from motorsOrganizer import MotorsOrganizer
+from motorsOrganizer import MotorsOrganizer
 import gui.views.scrambledCubeFrame as scf
 import gui.models.scrambledCubeModel as scm
 from threading import *
@@ -143,7 +143,9 @@ class ScrambledCubeController:
     def __start_motors(self, test):
         solving_timer: Timer = Timer()
         solving_timer.start()
-        """
+
+        print(self.solution_without_u)
+        
         motor_organizer = MotorsOrganizer()
 
         for move in self.solution_without_u:
@@ -151,10 +153,8 @@ class ScrambledCubeController:
 
         motor_organizer.cleanup()
         del motor_organizer
-        """
-        for i in range(round(test)):
-            print(f'Visualize solving... {i}')
-            time.sleep(1)
+        
+        
 
         solving_time = solving_timer.stop()
         self.solving_frame.solving_done(solving_time)

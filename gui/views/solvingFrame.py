@@ -13,10 +13,10 @@ class SolvingFrame:
         self.frame.pack(pady=5)
 
         # create top label for the frame for count down solving time
-        self.count_down_label: tk.Label = tk.Label(self.frame, font=('Arial', 10))
+        self.count_down_label: tk.Label = tk.Label(self.frame, font=('Arial', 16))
         self.count_down_label.pack_forget()
 
-        self.actual_solving_time_label: tk.Label = tk.Label(self.frame, font=('Arial', 10))
+        self.actual_solving_time_label: tk.Label = tk.Label(self.frame, font=('Arial', 16))
         self.actual_solving_time_label.pack_forget()
 
         self.controller: scc.ScrambledCubeController = None
