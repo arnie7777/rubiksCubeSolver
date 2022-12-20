@@ -30,8 +30,8 @@ class MotorController:
     def __init__(self, motor: str) -> None:
         self.motor = motor  # try fix bug
         if motor == 'front':
-            self.in1: int = 3
-            self.in2: int = 5
+            self.in1: int = 33
+            self.in2: int = 37
             self.in3: int = 7
             self.in4: int = 8
 
