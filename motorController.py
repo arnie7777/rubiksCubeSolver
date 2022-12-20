@@ -28,32 +28,38 @@ class MotorController:
     antiClockwise: str = 'antiClockwise'
 
     def __init__(self, motor: str) -> None:
-        self.motor = motor # try fix bug 
-        if motor == 'down':
-            self.in1: int = 16
-            self.in2: int = 18
-            self.in3: int = 22
-            self.in4: int = 24
-
-        elif motor == 'front':
-            pass
+        self.motor = motor  # try fix bug
+        if motor == 'front':
+            self.in1: int = 3
+            self.in2: int = 5
+            self.in3: int = 7
+            self.in4: int = 8
 
         elif motor == 'right':
-            self.in1: int = 11
-            self.in2: int = 12
-            self.in3: int = 13
-            self.in4: int = 15
-        
-        elif motor == 'back':
-            pass
+            self.in1: int = 10
+            self.in2: int = 11
+            self.in3: int = 12
+            self.in4: int = 13
+
+        elif motor == 'down':
+            self.in1: int = 15
+            self.in2: int = 16
+            self.in3: int = 18
+            self.in4: int = 19
 
         elif motor == 'left':
-            self.in1: int = 26
-            self.in2: int = 37
-            self.in3: int = 32
-            self.in4: int = 36
+            self.in1: int = 21
+            self.in2: int = 22
+            self.in3: int = 23
+            self.in4: int = 24
 
-        # setting up
+        elif motor == 'back':
+            self.in1: int = 26
+            self.in2: int = 29
+            self.in3: int = 31
+            self.in4: int = 32
+
+            # setting up
         if not MotorController.mode_has_been_set:  # only true for the first instance
             GPIO.setmode(GPIO.BOARD)
             MotorController.mode_has_been_set = True
@@ -78,7 +84,6 @@ class MotorController:
 
         if move[-1] == '\'':
             direction = MotorController.antiClockwise
-
 
         elif move[-1] == '2':
             motor_steps = MotorController.step_count_180_deg
