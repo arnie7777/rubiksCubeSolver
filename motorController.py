@@ -15,10 +15,10 @@ class MotorController:
     step_sleep: float = 0.002
 
     # defining stepper motor sequence
-    step_sequence = [[1, 1, 0, 0],
+    step_sequence = [[1, 0, 0, 1],
+                     [1, 1, 0, 0],
                      [0, 1, 1, 0],
-                     [0, 0, 1, 1],
-                     [1, 0, 0, 1]]
+                     [0, 0, 1, 1]]
     
     step_count_360_deg: int = 2048  # 360° / (11,25° * (1/64)) = 2.048 steps
     step_count_180_deg: int = int(step_count_360_deg / 2)
@@ -90,13 +90,6 @@ class MotorController:
 
         motor_step_counter: int = 0
 
-        if self.motor == 'left' or self.motor == 'down':
-            if direction == MotorController.antiClockwise:
-                direction = MotorController.clockwise
-            else:
-                direction = MotorController.antiClockwise
-            
-        
         for i in range(motor_steps):
             for count, pin in enumerate(self.motor_pins):
                 GPIO.output(pin, MotorController.step_sequence[motor_step_counter][count])
