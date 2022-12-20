@@ -9,13 +9,13 @@ class CenterColorFrame:
         self.frame = tk.Frame(left_frame)
         self.frame.pack(padx=1, pady=1)
         if center_position == 'front':
-            self.frame.pack(padx=1, pady=39)
+            self.frame.pack(padx=1, pady=55)
 
         # create top label for the frame
-        tk.Label(self.frame, font=('Arial', 8), text=f'Enter {center_position} center color of the cube').pack()
+        tk.Label(self.frame, font=('Arial', 12), text=f'Enter {center_position} center color of the cube').pack()
 
         # create empty label where the chosen color by the user will be displayed
-        self.selected_color_label = tk.Label(self.frame, font=('Arial', 8))
+        self.selected_color_label = tk.Label(self.frame, font=('Arial', 12))
         self.selected_color_label.pack()
 
         self.__create_button('White', ColorStorer.get_white())
@@ -36,7 +36,8 @@ class CenterColorFrame:
         self.selected_color_label.config(text=color_text, bg=color)
 
     def __create_button(self, color_text: str, color: str) -> None:
-        tk.Button(self.frame, text=color_text, bg=color, width='3', font=('Arial', 8),
+        tk.Button(self.frame, activebackground=color, text=color_text, bg=color, width='6', height='3',
+                  font=('Arial', 8),
                   command=lambda: self.controller.color_button_clicked(color_text, color)).pack(side='left')
 
     def toggle_widgets(self, dis_or_enable: str):

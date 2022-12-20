@@ -28,14 +28,15 @@ class MotorController:
     antiClockwise: str = 'antiClockwise'
 
     def __init__(self, motor: str) -> None:
+        self.motor = motor # try fix bug 
         if motor == 'down':
-            pass
+            self.in1: int = 16
+            self.in2: int = 18
+            self.in3: int = 22
+            self.in4: int = 24
 
         elif motor == 'front':
-            self.in1: int = 31
-            self.in2: int = 36
-            self.in3: int = 37
-            self.in4: int = 38
+            pass
 
         elif motor == 'right':
             self.in1: int = 11
@@ -47,10 +48,10 @@ class MotorController:
             pass
 
         elif motor == 'left':
-            self.in1: int = 16
-            self.in2: int = 18
-            self.in3: int = 22
-            self.in4: int = 29
+            self.in1: int = 26
+            self.in2: int = 37
+            self.in3: int = 32
+            self.in4: int = 36
 
         # setting up
         if not MotorController.mode_has_been_set:  # only true for the first instance
@@ -78,11 +79,19 @@ class MotorController:
         if move[-1] == '\'':
             direction = MotorController.antiClockwise
 
+
         elif move[-1] == '2':
             motor_steps = MotorController.step_count_180_deg
 
         motor_step_counter: int = 0
 
+        if self.motor == 'left' or self.motor == 'down':
+            if direction == MotorController.antiClockwise:
+                direction = MotorController.clockwise
+            else:
+                direction = MotorController.antiClockwise
+            
+        
         for i in range(motor_steps):
             for count, pin in enumerate(self.motor_pins):
                 GPIO.output(pin, MotorController.step_sequence[motor_step_counter][count])
