@@ -6,9 +6,6 @@ import time
 
 
 class MotorController:
-    # tells whether or not the GPIO mode have been set
-    mode_has_been_set: bool = False
-
     # all class attributes below are constant values
 
     # time between each step on the motor
@@ -28,7 +25,6 @@ class MotorController:
     antiClockwise: str = 'antiClockwise'
 
     def __init__(self, motor: str) -> None:
-        self.motor = motor  # try fix bug
         if motor == 'front':
             self.in1: int = 33
             self.in2: int = 37
@@ -58,11 +54,6 @@ class MotorController:
             self.in2: int = 29
             self.in3: int = 31
             self.in4: int = 32
-
-            # setting up
-        if not MotorController.mode_has_been_set:  # only true for the first instance
-            GPIO.setmode(GPIO.BOARD)
-            MotorController.mode_has_been_set = True
 
         GPIO.setup(self.in1, GPIO.OUT)
         GPIO.setup(self.in2, GPIO.OUT)
@@ -99,7 +90,7 @@ class MotorController:
 
             elif direction == MotorController.antiClockwise:
                 motor_step_counter = (motor_step_counter + 1) % 4
-            
+
             time.sleep(MotorController.step_sleep)
         
         self.__cleanup_pins()
@@ -109,8 +100,3 @@ class MotorController:
         GPIO.output(self.in2, GPIO.LOW)
         GPIO.output(self.in3, GPIO.LOW)
         GPIO.output(self.in4, GPIO.LOW)
-
-    @classmethod
-    def cleanup(cls) -> None:
-        MotorController.mode_has_been_set = False
-        GPIO.cleanup()

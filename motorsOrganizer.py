@@ -30,9 +30,6 @@ class MotorsOrganizer:
             pass
 
     def cleanup(self) -> None:
-        """GPIO clean up. Also deletes all the objects"""
-        
-        MotorController.cleanup()
         del self.down_controller
         del self.front_controller
         del self.right_controller
