@@ -5,6 +5,7 @@ from ledController import LedController
 
 def main():
     GpioController.set_mode()
+    LedController.setup()
     # LedController.turn_on_green()
 
     GuiInitializer()

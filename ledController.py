@@ -11,8 +11,9 @@ class LedController:
 
     @staticmethod
     def setup() -> None:
-        GPIO.setup(LedController.green_led_pin, GPIO.OUT)
+        # GPIO.setup(LedController.green_led_pin, GPIO.OUT)
         GPIO.setup(LedController.red_led_pin, GPIO.OUT)
+        GPIO.output(LedController.red_led_pin, GPIO.LOW)
 
     @staticmethod
     def turn_on_green() -> None:
@@ -29,6 +30,7 @@ class LedController:
             sleep(0.3)
             GPIO.output(LedController.red_led_pin, GPIO.LOW)
             sleep(0.3)
+
 
     @staticmethod
     def stop_red_blink() -> None:
