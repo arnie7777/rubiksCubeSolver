@@ -140,6 +140,7 @@ class ScrambledCubeController:
         t2 = Thread(target=lambda: self.__start_motors())
         t2.start()
 
+        LedController.red_led_blink = True
         t3 = Thread(target=lambda: LedController.start_red_blink())
         t3.start()
 
@@ -156,6 +157,7 @@ class ScrambledCubeController:
         for move in self.solution_without_u:
             motor_organizer.rotate(move)
 
+        print('before setting to false')
         LedController.stop_red_blink()
 
         motor_organizer.cleanup()

@@ -5,8 +5,8 @@ from time import sleep
 
 
 class LedController:
-    green_led_pin: int = 36
-    red_led_pin: int = 38
+    green_led_pin: int = 38
+    red_led_pin: int = 36
     red_led_blink: bool = True
 
     @staticmethod
