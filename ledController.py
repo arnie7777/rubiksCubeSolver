@@ -33,19 +33,3 @@ class LedController:
     @staticmethod
     def stop_red_blink() -> None:
         LedController.red_led_blink = False
-
-
-
-
-
-
-
-
-
-LED_PIN = 17
-GPIO.setmode(GPIO.B)
-GPIO.setup(LED_PIN, GPIO.OUT)
-GPIO.output(LED_PIN, GPIO.HIGH)
-time.sleep(1)
-GPIO.output(LED_PIN, GPIO.LOW)
-GPIO.cleanup()

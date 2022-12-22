@@ -141,7 +141,7 @@ class ScrambledCubeController:
         t2.start()
 
     def __start_motors(self):
-        LedController.turn_off_green()
+        # LedController.turn_off_green()
         t3 = Thread(target=lambda: LedController.start_red_blink())
         t3.start()
 
@@ -163,7 +163,7 @@ class ScrambledCubeController:
         solving_time = solving_timer.stop()
         self.solving_frame.solving_done(solving_time)
 
-        LedController.turn_on_green()
+        # LedController.turn_on_green()
 
     def __color_is_valid(self, color: str, scrambled_cube_so_far: str) -> bool:
         """Checks if the same color occurs less than 9 times:
