@@ -140,10 +140,11 @@ class ScrambledCubeController:
         t2 = Thread(target=lambda: self.__start_motors())
         t2.start()
 
-    def __start_motors(self):
-        # LedController.turn_off_green()
         t3 = Thread(target=lambda: LedController.start_red_blink())
         t3.start()
+
+    def __start_motors(self):
+        # LedController.turn_off_green()
 
         solving_timer: Timer = Timer()
         solving_timer.start()
