@@ -111,6 +111,8 @@ class ScrambledCubeController:
             return
         
         # Code reaches here if scramble is valid (i.e. we have gotten a solution from the cube solver)
+        LedController.turn_off_green()
+
         self.solutionModel.set_solution(solution)
         solution: list[str] = self.solutionModel.get_solution()
 
@@ -145,8 +147,6 @@ class ScrambledCubeController:
         t3.start()
 
     def __start_motors(self):
-        # LedController.turn_off_green()
-
         solving_timer: Timer = Timer()
         solving_timer.start()
 
@@ -157,7 +157,6 @@ class ScrambledCubeController:
         for move in self.solution_without_u:
             motor_organizer.rotate(move)
 
-        print('before setting to false')
         LedController.stop_red_blink()
 
         motor_organizer.cleanup()
@@ -166,7 +165,7 @@ class ScrambledCubeController:
         solving_time = solving_timer.stop()
         self.solving_frame.solving_done(solving_time)
 
-        # LedController.turn_on_green()
+        LedController.turn_on_green()
 
     def __color_is_valid(self, color: str, scrambled_cube_so_far: str) -> bool:
         """Checks if the same color occurs less than 9 times:
