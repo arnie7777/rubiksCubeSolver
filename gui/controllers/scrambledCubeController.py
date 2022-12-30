@@ -1,5 +1,3 @@
-import time
-
 from gui.models.scrambledCubeModel import ScrambledCubeModel
 from gui.models.cubeSolutionModel import CubeSolutionModel
 from gui.models.centerColorsModel import CenterColorsModel

@@ -1,4 +1,4 @@
-# inspiration to the from the link below
+# Parts of the code in this class is inspired from the link below
 # https://ben.akrin.com/driving-a-28byj-48-stepper-motor-uln2003-driver-with-a-raspberry-pi/
 
 import RPi.GPIO as GPIO
