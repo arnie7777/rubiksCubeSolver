@@ -37,13 +37,23 @@ class ScrambledCubeController:
         self.solution_without_u: list[str] = []
 
     def color_button_clicked(self, color_letter: str, scrambled_cube_so_far: str) -> None:
+        """
+        Validation for entered scramble color. Use private method to check that the
+        color occurred less than nine times and add a new to indicate that the user
+        is finished entering a side.
+        :param color_letter:
+        :param scrambled_cube_so_far:
+        """
         if self.__color_is_valid(color_letter, scrambled_cube_so_far):
             scrambled_cube_so_far_update: str = scrambled_cube_so_far + color_letter
-            length_of_scrambled_cube: int = self.__len_of_scrambled_colors_so_far(scrambled_cube_so_far_update)
+            length_of_scrambled_cube: int = self.__len_of_scrambled_colors_so_far\
+                (scrambled_cube_so_far_update)
             if length_of_scrambled_cube % 9 == 0 and length_of_scrambled_cube < 54:
                 scrambled_cube_so_far_update += '\n'
-            self.scrambled_cube_model.set_scrambled_cube_so_far(scrambled_cube_so_far_update)
-            self.scrambled_cube_frame.add_color_success(scrambled_cube_so_far_update)
+            self.scrambled_cube_model.\
+                set_scrambled_cube_so_far(scrambled_cube_so_far_update)
+            self.scrambled_cube_frame.\
+                add_color_success(scrambled_cube_so_far_update)
             return
 
         self.scrambled_cube_frame.add_color_error(
